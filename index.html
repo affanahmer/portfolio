@@ -1,0 +1,1895 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Affan Ahmer - Frontend Developer</title>
+    <!-- Three.js 3D Animated Background -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- EmailJS for direct email sending -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <!-- Inter font for a modern and clean typography -->
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap");
+
+      /* ===== DARK THEME (DEFAULT) ===== */
+      :root,
+      .theme-dark {
+        /* Text Colors */
+        --color-text-primary: #ffffff;
+        --color-text-secondary: #b0b0d1;
+        --color-text-tertiary: #9ca3af;
+        --color-text-on-primary: #0a0a1a;
+
+        /* Background Colors */
+        --color-background-primary: #0a0a1a;
+        --color-background-secondary: #1a1a2e;
+        --color-background-tertiary: #16213e;
+
+        /* Surface Colors */
+        --color-surface-primary: #1c1c3a;
+        --color-surface-secondary: #22223a;
+        --color-surface-elevated: #2a2a4a;
+
+        /* Border Colors */
+        --color-border-primary: rgba(255, 255, 255, 0.1);
+        --color-border-secondary: rgba(255, 255, 255, 0.05);
+        --color-border-focus: #7850ff;
+
+        /* Brand Colors */
+        --color-primary: #7850ff;
+        --color-accent: #60a5fa;
+        --color-success: #22c55e;
+        --color-warning: #f59e0b;
+        --color-error: #ef4444;
+
+        /* Glass Effects */
+        --glass-background-primary: rgba(22, 22, 42, 0.5);
+        --glass-background-secondary: rgba(22, 22, 42, 0.3);
+        --glass-background-tertiary: rgba(22, 22, 42, 0.2);
+        --glass-border-primary: rgba(255, 255, 255, 0.1);
+        --glass-border-secondary: rgba(255, 255, 255, 0.05);
+        --glass-blur-small: blur(8px);
+        --glass-blur-medium: blur(12px);
+        --glass-blur-large: blur(16px);
+        --glass-shadow-small: 0 2px 16px rgba(0, 0, 0, 0.3);
+        --glass-shadow-medium: 0 4px 32px rgba(0, 0, 0, 0.4);
+        --glass-shadow-large: 0 8px 64px rgba(0, 0, 0, 0.5);
+
+        /* Effects */
+        --hover-glow: 0 0 25px rgba(120, 80, 255, 0.6);
+        --text-shadow-glow: 0 0 10px rgba(120, 80, 255, 0.3);
+
+        /* Starfield Parallax Variables */
+        --starfield-opacity: 1;
+        --starfield-blur: 0px;
+        --starfield-brightness: 1;
+        --starfield-speed: 1;
+        --star-density: 1;
+
+        /* 3D Theme Variables */
+        --bg-3d: #0a0a1a;
+        --fog-3d: #0a0a1a;
+        --material-primary-3d: #7850ff;
+        --material-secondary-3d: #ffffff;
+        --light-ambient-3d: #ffffff;
+        --light-point-3d: #ffffff;
+      }
+
+      /* ===== LIGHT THEME ===== */
+      .theme-light {
+        /* Text Colors */
+        --color-text-primary: #111827;
+        --color-text-secondary: #374151;
+        --color-text-tertiary: #6b7280;
+        --color-text-on-primary: #ffffff;
+
+        /* Background Colors */
+        --color-background-primary: #ffffff;
+        --color-background-secondary: #fafafa;
+        --color-background-tertiary: #f5f5f5;
+
+        /* Surface Colors */
+        --color-surface-primary: #ffffff;
+        --color-surface-secondary: #fefefe;
+        --color-surface-elevated: #ffffff;
+
+        /* Border Colors */
+        --color-border-primary: #e5e7eb;
+        --color-border-secondary: #f3f4f6;
+        --color-border-focus: #3b82f6;
+
+        /* Brand Colors */
+        --color-primary: #3b82f6;
+        --color-accent: #14b8a6;
+        --color-success: #22c55e;
+        --color-warning: #f59e0b;
+        --color-error: #ef4444;
+
+        /* Glass Effects - Same blur levels, adjusted transparency */
+        --glass-background-primary: rgba(255, 255, 255, 0.25);
+        --glass-background-secondary: rgba(255, 255, 255, 0.18);
+        --glass-background-tertiary: rgba(255, 255, 255, 0.12);
+        --glass-border-primary: rgba(255, 255, 255, 0.18);
+        --glass-border-secondary: rgba(255, 255, 255, 0.12);
+        --glass-blur-small: blur(8px);
+        --glass-blur-medium: blur(12px);
+        --glass-blur-large: blur(16px);
+        --glass-shadow-small: 0 2px 16px rgba(0, 0, 0, 0.06);
+        --glass-shadow-medium: 0 4px 32px rgba(0, 0, 0, 0.08);
+        --glass-shadow-large: 0 8px 64px rgba(0, 0, 0, 0.12);
+
+        /* Effects */
+        --hover-glow: 0 0 25px rgba(59, 130, 246, 0.4);
+        --text-shadow-glow: 0 0 10px rgba(59, 130, 246, 0.2);
+
+        /* 3D Theme Variables */
+        --bg-3d: #ffffff;
+        --fog-3d: #f8fafc;
+        --material-primary-3d: #3b82f6;
+        --material-secondary-3d: #64748b;
+        --light-ambient-3d: #f1f5f9;
+        --light-point-3d: #e2e8f0;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* ===== SMOOTH TRANSITIONS & MICRO-ANIMATIONS ===== */
+
+      /* Apply smooth transitions to common interactive elements */
+      button,
+      a,
+      input,
+      textarea,
+      select,
+      .skill-card,
+      .project-card,
+      .education-entry,
+      .social-card,
+      header,
+      nav,
+      .menu-toggle span,
+      .hero h1,
+      .hero h2,
+      .hero p,
+      .section-title,
+      .contact-btn {
+        transition: background-color 0.3s ease, color 0.3s ease, fill 0.3s ease,
+          transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      /* Enhanced SVG transitions */
+      svg,
+      svg path,
+      svg circle,
+      svg rect {
+        transition: fill 0.3s ease, stroke 0.3s ease, opacity 0.3s ease,
+          transform 0.3s ease;
+      }
+
+      /* Smooth theme transitions */
+      :root,
+      .theme-light {
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      body {
+        background-color: var(--color-background-primary);
+        color: var(--color-text-primary);
+        font-family: "Inter", sans-serif;
+        overflow-x: hidden;
+      }
+
+      /* 3D Background Container */
+      #bg-3d {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        z-index: -1;
+        transition: opacity 1s ease-out, filter 0.8s ease;
+        background: transparent;
+        opacity: var(--starfield-opacity, 1);
+        filter: blur(var(--starfield-blur, 0px))
+          brightness(var(--starfield-brightness, 1));
+      }
+
+      /* Fallback Canvas for 2D Starfield */
+      #bg-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        z-index: -2;
+        transition: opacity 1s ease-out, filter 0.8s ease, transform 0.1s ease;
+        background: transparent;
+        opacity: var(--starfield-opacity);
+        filter: blur(var(--starfield-blur))
+          brightness(var(--starfield-brightness));
+        transform: translateZ(0); /* Enable hardware acceleration */
+      }
+
+      /* Star base styling - theme independent */
+      .star {
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+        opacity: 0.8;
+        pointer-events: none;
+        animation: twinkle 3s ease-in-out infinite alternate;
+      }
+
+      @keyframes twinkle {
+        0% {
+          opacity: 0.3;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.8;
+          transform: scale(1.1);
+        }
+        100% {
+          opacity: 0.3;
+          transform: scale(1);
+        }
+      }
+
+      /* Different star sizes */
+      .star.small {
+        width: 1px;
+        height: 1px;
+      }
+      .star.medium {
+        width: 2px;
+        height: 2px;
+      }
+      .star.large {
+        width: 3px;
+        height: 3px;
+      }
+      .star.xlarge {
+        width: 4px;
+        height: 4px;
+        box-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
+      }
+
+      /* Smooth theme cross-fade overlay for 3D scene */
+      .theme-transition-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        z-index: -1;
+        background: var(--color-background-primary);
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        pointer-events: none;
+      }
+
+      .theme-transitioning .theme-transition-overlay {
+        opacity: 0.4;
+      }
+
+      /* Header and Navigation */
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 1.5rem 5%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 100;
+        background: var(--glass-background-secondary);
+        backdrop-filter: var(--glass-blur-medium);
+        border-bottom: 1px solid var(--color-border-primary);
+      }
+
+      header .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-decoration: none;
+        color: var(--color-text-primary);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .nav-container {
+        display: flex;
+        align-items: center;
+        flex: 1;
+        justify-content: center;
+      }
+
+      header nav a {
+        color: var(--color-text-secondary);
+        text-decoration: none;
+        margin-left: 2rem;
+        font-weight: 500;
+        position: relative;
+        transition: color 0.3s ease;
+      }
+
+      header nav a::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: var(--color-primary);
+        transition: width 0.3s ease-in-out;
+      }
+
+      header nav a:hover::after {
+        width: 100%;
+      }
+
+      header nav a:hover {
+        color: var(--color-primary);
+      }
+
+      /* Mobile Navigation Toggle Button */
+      .menu-toggle {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+        cursor: pointer;
+        z-index: 200;
+      }
+
+      .menu-toggle span {
+        display: block;
+        width: 100%;
+        height: 3px;
+        background-color: var(--color-primary);
+        border-radius: 5px;
+        transition: all 0.3s ease;
+      }
+
+      .menu-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+
+      .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .menu-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+      }
+
+      /* Theme Toggle Button - Simple Toggle Switch */
+      #themeToggle {
+        background: var(--color-surface-primary);
+        border: 1px solid var(--color-border-primary);
+        border-radius: 20px;
+        width: 50px;
+        height: 25px;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.3s ease;
+        margin-left: 1rem;
+        flex-shrink: 0;
+        box-shadow: var(--glass-shadow-small);
+      }
+
+      #themeToggle:hover {
+        border-color: var(--color-primary);
+        box-shadow: var(--hover-glow);
+      }
+
+      #themeToggle .icon {
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 21px;
+        height: 21px;
+        background: var(--color-primary);
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Dark mode - move knob to right */
+      :root #themeToggle .icon,
+      .theme-dark #themeToggle .icon {
+        left: 27px;
+      }
+
+      /* Mobile Navigation Menu */
+      .mobile-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: var(--glass-background-primary);
+        backdrop-filter: var(--glass-blur-large);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transform: translateX(-100%);
+        transition: transform 0.5s ease-in-out;
+        z-index: 150;
+      }
+
+      .mobile-nav.open {
+        transform: translateX(0);
+      }
+
+      .mobile-nav a {
+        font-size: 2rem;
+        color: var(--color-primary);
+        text-decoration: none;
+        margin: 1.5rem 0;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      /* Main Content Layout */
+      main {
+        position: relative;
+      }
+
+      /* Hero Section */
+      .hero {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 0 5%;
+        position: relative;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.5rem, 8vw, 4rem);
+        font-weight: 700;
+        margin-bottom: 1rem;
+        text-shadow: var(--text-shadow-glow);
+      }
+
+      .hero h2 {
+        font-size: clamp(1.2rem, 3vw, 1.8rem);
+        font-weight: 400;
+        color: var(--color-text-secondary);
+        margin-bottom: 1.5rem;
+      }
+
+      .hero p {
+        max-width: 600px;
+        font-size: clamp(1rem, 2vw, 1.1rem);
+        line-height: 1.6;
+        color: var(--color-text-secondary);
+      }
+
+      /* Content Sections */
+      .content-section {
+        padding: 6rem 5%;
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+      }
+
+      .section-title {
+        font-size: clamp(2rem, 5vw, 2.5rem);
+        margin-bottom: 3rem;
+        text-align: center;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      /* About Section */
+      .about-content {
+        display: flex;
+        align-items: center;
+        gap: 4rem;
+      }
+
+      .about-content img {
+        width: clamp(200px, 30vw, 300px);
+        height: clamp(200px, 30vw, 300px);
+        object-fit: cover;
+        border-radius: 50%;
+        border: 3px solid var(--color-border-primary);
+        box-shadow: var(--glass-shadow-small);
+      }
+
+      .about-text p {
+        font-size: 1.1rem;
+        line-height: 1.7;
+        color: var(--color-text-secondary);
+        margin-bottom: 2rem;
+      }
+
+      /* Education Section */
+      .education-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .education-entry {
+        background: var(--glass-background-primary);
+        border: 1px solid var(--color-border-primary);
+        border-radius: 15px;
+        padding: 2rem;
+        text-align: left;
+        transition: transform 0.3s, box-shadow 0.3s;
+        text-decoration: none; /* For the link that wraps the card */
+        color: inherit;
+        display: block;
+      }
+
+      .education-entry:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--hover-glow);
+      }
+
+      .education-entry h3 {
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--color-primary);
+      }
+
+      .education-entry p {
+        font-size: 1rem;
+        line-height: 1.5;
+        color: var(--color-text-secondary);
+        margin-bottom: 0.5rem;
+      }
+
+      /* Skills Section */
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .skill-card {
+        background: var(--glass-background-primary);
+        border: 1px solid var(--color-border-primary);
+        border-radius: 15px;
+        padding: 2rem;
+        text-align: center;
+        transition: transform 0.3s, box-shadow 0.3s;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 200px;
+      }
+
+      .skill-card:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--hover-glow);
+      }
+
+      .skill-card svg {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 1rem;
+        fill: var(--color-primary);
+        flex-shrink: 0;
+      }
+
+      .skill-card h3 {
+        font-size: 1.2rem;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: var(--color-text-primary);
+      }
+
+      .skill-card h4,
+      .skill-card h5 {
+        font-size: 0.9rem;
+        font-weight: 400;
+        margin-bottom: 0.75rem;
+        color: var(--color-primary);
+        opacity: 0.8;
+      }
+
+      .skill-card p {
+        font-size: 0.9rem;
+        line-height: 1.4;
+        color: var(--color-text-secondary);
+        margin: 0;
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Projects Section */
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .project-card {
+        background: var(--glass-background-primary);
+        border: 1px solid var(--color-border-primary);
+        border-radius: 15px;
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .project-card:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--hover-glow);
+      }
+
+      .project-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+
+      .project-info {
+        padding: 1.5rem;
+      }
+
+      .project-info h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .project-info p {
+        color: var(--color-text-secondary);
+        margin-bottom: 1.5rem;
+      }
+
+      .project-links {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .project-links a {
+        color: var(--color-primary);
+        text-decoration: none;
+        font-weight: 500;
+        border: 1px solid var(--color-primary);
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        transition: background 0.3s, color 0.3s;
+      }
+
+      .project-links a:hover {
+        background: var(--color-primary);
+        color: var(--color-text-on-primary);
+      }
+
+      /* Socials Section */
+      .socials-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        justify-content: center;
+      }
+
+      .social-card {
+        background: var(--glass-background-primary);
+        border: 1px solid var(--color-border-primary);
+        border-radius: 15px;
+        padding: 2.5rem 2rem;
+        text-align: center;
+        text-decoration: none;
+        color: var(--color-primary);
+        transition: transform 0.3s, box-shadow 0.3s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .social-card:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--hover-glow);
+      }
+
+      .social-card svg {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 1.5rem;
+        fill: var(--color-primary);
+      }
+
+      .social-card h3 {
+        font-size: 1.4rem;
+        font-weight: 500;
+      }
+
+      /* Contact Section */
+      .contact-content {
+        text-align: center;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .contact-content p {
+        color: var(--color-text-secondary);
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+      }
+
+      .contact-btn {
+        display: inline-block;
+        background: var(--color-primary);
+        color: var(--color-text-on-primary);
+        padding: 1rem 2.5rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 1.1rem;
+        font-weight: 700;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .contact-btn:hover {
+        transform: scale(1.05);
+        box-shadow: var(--hover-glow);
+      }
+
+      /* Footer */
+      footer {
+        text-align: center;
+        padding: 2rem 5%;
+        margin-top: 4rem;
+        border-top: 1px solid var(--color-border-primary);
+        color: var(--color-text-secondary);
+      }
+
+      /* Contact Form Modal */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      }
+
+      .modal-content {
+        background: var(--glass-background-primary);
+        border: 1px solid var(--color-border-primary);
+        border-radius: 15px;
+        margin: 5% auto;
+        padding: 0;
+        width: 90%;
+        max-width: 500px;
+        max-height: 80vh;
+        overflow-y: auto;
+        box-shadow: var(--glass-shadow-large);
+        backdrop-filter: var(--glass-blur-large);
+        -webkit-backdrop-filter: var(--glass-blur-large);
+        animation: modalSlideIn 0.3s ease-out;
+        scrollbar-width: thin;
+        scrollbar-color: var(--color-primary) var(--color-surface-secondary);
+      }
+
+      .modal-content::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      .modal-content::-webkit-scrollbar-track {
+        background: var(--color-surface-secondary);
+        border-radius: 4px;
+        margin: 2px;
+      }
+
+      .modal-content::-webkit-scrollbar-thumb {
+        background: var(--color-primary);
+        border-radius: 4px;
+        border: 1px solid var(--color-border-primary);
+      }
+
+      .modal-content::-webkit-scrollbar-thumb:hover {
+        background: var(--color-primary);
+        opacity: 0.8;
+      }
+
+      @keyframes modalSlideIn {
+        from {
+          opacity: 0;
+          transform: translateY(-50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 2rem;
+        border-bottom: 1px solid var(--color-border-primary);
+      }
+
+      .modal-header h2 {
+        margin: 0;
+        color: var(--color-text-primary);
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      .close {
+        color: var(--color-text-secondary);
+        font-size: 2rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: color 0.3s ease;
+      }
+
+      .close:hover {
+        color: var(--color-primary);
+      }
+
+      .contact-form {
+        padding: 2rem;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--color-text-primary);
+        font-weight: 500;
+        font-size: 0.9rem;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid var(--color-border-primary);
+        border-radius: 8px;
+        background: var(--glass-background-secondary);
+        color: var(--color-text-primary);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+      }
+
+      .form-group input:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 3px rgba(120, 80, 255, 0.1);
+      }
+
+      .form-group textarea {
+        resize: vertical;
+        min-height: 150px;
+        max-height: 300px;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: var(--color-primary) var(--color-surface-secondary);
+        line-height: 1.5;
+        padding: 1rem;
+      }
+
+      .form-group textarea::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      .form-group textarea::-webkit-scrollbar-track {
+        background: var(--color-surface-secondary);
+        border-radius: 5px;
+        margin: 2px;
+      }
+
+      .form-group textarea::-webkit-scrollbar-thumb {
+        background: var(--color-primary);
+        border-radius: 5px;
+        border: 1px solid var(--color-border-primary);
+      }
+
+      .form-group textarea::-webkit-scrollbar-thumb:hover {
+        background: var(--color-primary);
+        opacity: 0.8;
+        transform: scale(1.1);
+      }
+
+      .form-group textarea::-webkit-scrollbar-corner {
+        background: var(--color-surface-secondary);
+      }
+
+      .char-count {
+        text-align: right;
+        font-size: 0.8rem;
+        color: var(--color-text-tertiary);
+        margin-top: 0.25rem;
+      }
+
+      .char-count.error {
+        color: var(--color-error);
+      }
+
+      .form-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: flex-end;
+        margin-top: 2rem;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary {
+        background: var(--color-primary);
+        color: var(--color-text-on-primary);
+      }
+
+      .btn-primary:hover {
+        background: var(--color-primary);
+        transform: translateY(-2px);
+        box-shadow: var(--hover-glow);
+      }
+
+      .btn-secondary {
+        background: var(--color-surface-secondary);
+        color: var(--color-text-secondary);
+        border: 1px solid var(--color-border-primary);
+      }
+
+      .btn-secondary:hover {
+        background: var(--color-surface-elevated);
+        color: var(--color-text-primary);
+      }
+
+      /* Modal responsive design */
+      @media (max-width: 768px) {
+        .modal-content {
+          margin: 5% auto;
+          width: 95%;
+          max-height: 85vh;
+        }
+
+        .modal-header {
+          padding: 1rem 1.5rem;
+        }
+
+        .contact-form {
+          padding: 1.5rem;
+        }
+
+        .form-actions {
+          flex-direction: column;
+        }
+
+        .btn-primary,
+        .btn-secondary {
+          width: 100%;
+        }
+
+        .form-group textarea {
+          min-height: 120px;
+          max-height: 200px;
+          padding: 0.75rem;
+        }
+
+        .form-group textarea::-webkit-scrollbar {
+          width: 8px;
+        }
+
+        .modal-content::-webkit-scrollbar {
+          width: 6px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 3D Background Container -->
+    <div id="bg-3d"></div>
+
+    <!-- Fallback Starfield Background Canvas -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Theme Transition Overlay for smooth cross-fade -->
+    <div class="theme-transition-overlay" id="theme-overlay"></div>
+
+    <!-- Header -->
+    <header>
+      <a href="#" class="logo">Affan Ahmer</a>
+      <div class="nav-container">
+        <nav class="desktop-nav">
+          <a href="#about">About</a>
+          <a href="#education">Education</a>
+          <a href="#skills">Skills</a>
+          <a href="#projects">Projects</a>
+          <a href="#socials">Socials</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+      <!-- Theme toggle button - visible on all devices -->
+      <button id="themeToggle" aria-label="Toggle theme">
+        <span class="icon"></span>
+      </button>
+      <!-- Mobile menu toggle button -->
+      <div class="menu-toggle" id="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <!-- Mobile Navigation Menu -->
+      <nav class="mobile-nav" id="mobile-nav">
+        <a href="#about">About</a>
+        <a href="#education">Education</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#socials">Socials</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <h1>Affan Ahmer</h1>
+      <h2>Professional Frontend Web Developer</h2>
+      <p>
+        Crafting immersive and user-friendly web experiences with a passion for
+        React and modern web technologies.
+      </p>
+    </section>
+
+    <!-- Main Content Wrapper -->
+    <main>
+      <!-- About Section -->
+      <section id="about" class="content-section">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-content">
+          <img
+            src="./affan.jpg"
+            alt="Affan Ahmer - Professional Frontend Developer"
+          />
+          <div class="about-text">
+            <p>
+              I am a passionate frontend developer with a knack for creating
+              dynamic, responsive, and intuitive web applications. With a strong
+              foundation in modern JavaScript frameworks and a keen eye for
+              design, I specialize in bringing ideas to life in the browser. My
+              goal is to always build products that provide pixel-perfect,
+              performant experiences.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Education Section -->
+      <section id="education" class="content-section">
+        <h2 class="section-title">Education</h2>
+        <div class="education-container">
+          <a
+            href="https://www.ucp.edu.pk/"
+            target="_blank"
+            class="education-entry"
+          >
+            <h3>Bachelor's in Computer Science</h3>
+            <p>University of Central Punjab</p>
+            <p>2022 - 2026</p>
+          </a>
+          <a
+            href="https://www.pgc.edu/"
+            target="_blank"
+            class="education-entry"
+          >
+            <h3>Intermediate (F.Sc. Pre-Engineering)</h3>
+            <p>Punjab Group of Colleges</p>
+            <p>2020 - 2022</p>
+          </a>
+          <a
+            href="https://www.dpslahore.edu.pk/"
+            target="_blank"
+            class="education-entry"
+          >
+            <h3>Matriculation (Computer Science)</h3>
+            <p>Divisional Public School</p>
+            <p>2018 - 2020</p>
+          </a>
+        </div>
+      </section>
+
+      <!-- Skills Section -->
+      <section id="skills" class="content-section">
+        <h2 class="section-title">My Tech Stack</h2>
+        <div class="skills-grid">
+          <!-- React SVG -->
+          <div class="skill-card">
+            <svg
+              role="img"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>WEB Development</title>
+              <path
+                d="M12 2.253C17.382 2.253 21.747 6.618 21.747 12c0 5.382-4.365 9.747-9.747 9.747S2.253 17.382 2.253 12C2.253 6.618 6.618 2.253 12 2.253zm-.068 1.485c-.097 0-.176.08-.176.176v.852a.176.176 0 0 0 .176.176h.136a.176.176 0 0 0 .176-.176v-.852a.176.176 0 0 0-.176-.176h-.136zm0 1.956c-.097 0-.176.08-.176.176v.852a.176.176 0 0 0 .176.176h.136a.176.176 0 0 0 .176-.176v-.852a.176.176 0 0 0-.176-.176h-.136zm-.407 1.956a.176.176 0 0 0 .176.176h.136a.176.176 0 0 0 .176-.176v-.852a.176.176 0 0 0-.176-.176h-.136a.176.176 0 0 0-.176.176v.852zM12 7.652c-.097 0-.176.08-.176.176v.852a.176.176 0 0 0 .176.176h.136a.176.176 0 0 0 .176-.176v-.852a.176.176 0 0 0-.176-.176h-.136zm.388 1.956a.176.176 0 0 0-.176.176v.852a.176.176 0 0 0 .176.176h.136a.176.176 0 0 0 .176-.176v-.852a.176.176 0 0 0-.176-.176h-.136zm-.068 1.956a.176.176 0 0 0-.176.176v.852a.176.176 0 0 0 .176.176h.136a.176.176 0 0 0 .176-.176v-.852a.176.176 0 0 0-.176-.176h-.136zm-.407 1.956a.176.176 0 0 0 .176.176h.136a.176.176 0 0 0 .176-.176v-.852a.176.176 0 0 0-.176-.176h-.136a.176.176 0 0 0-.176.176v.852zM12 13.568c-.097 0-.176.08-.176.176v.852a.176.176 0 0 0 .176.176h.136a.176.176 0 0 0 .176-.176v-.852a.176.176 0 0 0-.176-.176h-.136zm.388 1.956a.176.176 0 0 0-.176.176v.852a.176.176 0 0 0 .176.176h.136a.176.176 0 0 0 .176-.176v-.852a.176.176 0 0 0-.176-.176h-.136zm-.068 1.956a.176.176 0 0 0-.176.176v.852a.176.176 0 0 0 .176.176h.136a.176.176 0 0 0 .176-.176v-.852a.176.176 0 0 0-.176-.176h-.136zm-.407 1.956a.176.176 0 0 0 .176.176h.136a.176.176 0 0 0 .176-.176v-.852a.176.176 0 0 0-.176-.176h-.136a.176.176 0 0 0-.176.176v.852z"
+              />
+            </svg>
+            <h3>Web Development</h3>
+            <p>Proficient in HTML, CSS, and basic web development</p>
+          </div>
+          <!-- Tailwind CSS SVG -->
+          <div class="skill-card">
+            <svg
+              role="img"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>AI Knowledge</title>
+              <path
+                d="M19.006 4.398a.916.916 0 0 0-1.282.11l-3.322 3.86a.916.916 0 0 1-1.296 0l-3.322-3.86a.916.916 0 0 0-1.282-.11L1.624 10.97a.916.916 0 0 0 .61 1.57h1.492a.916.916 0 0 0 .74-.38L10.5 5.5l.088.102 6.536 7.6a.916.916 0 0 0 .74.38h1.492a.916.916 0 0 0 .61-1.57l-6.284-6.572zM12.916 10.932l-2.072 2.41a.916.916 0 0 0 0 1.295l2.072 2.41a.916.916 0 0 0 1.282.11l6.284-6.572a.916.916 0 0 0-.61-1.57h-1.492a.916.916 0 0 0-.74.38l-3.322 3.86zM8.084 13.342l-2.072 2.41a.916.916 0 0 0 0 1.295l2.072 2.41a.916.916 0 0 0 1.282.11l6.284-6.572a.916.916 0 0 0-.61-1.57h-1.492a.916.916 0 0 0-.74.38l-3.322 3.86z"
+              />
+            </svg>
+            <h3>AI Knowledge</h3>
+            <p>Understanding of Generative AI and its applications</p>
+          </div>
+          <!-- JavaScript SVG -->
+          <div class="skill-card">
+            <svg
+              role="img"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>Programming</title>
+              <path
+                d="M12.164 1.134a.97.97 0 0 0-.962-.016c-.461.206-1.12.502-1.99.982a17.26 17.26 0 0 0-3.342 2.448c-.68.618-1.22 1.155-1.63 1.58-.75.76-1.343 1.487-1.748 2.302-.553 1.1-.735 2.29-.533 3.52.27 1.64.914 2.87 2.052 3.993 1.173 1.162 2.534 1.83 4.103 2.062 1.433.208 2.89-.04 4.237-.77 1.44-.79 2.515-2.002 3.14-3.55.226-.54.343-1.08.38-1.6.08-.94-.28-2.03-.83-3.15-.55-1.12-1.1-1.89-1.92-2.73-1.03-1.04-2.12-1.67-3.26-2.02-.91-.28-1.88-.34-2.83-.2-.55.08-1.1.25-1.62.47-.4.16-.76.35-1.1.57-.46.28-.9.57-1.31.89l.74.83c.3-.23.63-.44 1.0-.64.4-.2.83-.35 1.28-.48.7-.2 1.45-.25 2.18-.18.78.07 1.55.25 2.27.56 1.16.48 2.1 1.25 2.8 2.2.66.92 1.04 1.95 1.12 3.03.08 1.08-.12 2.14-.58 3.12-.47 1.02-1.16 1.83-2.06 2.42-1.02.66-2.15 1.02-3.32 1.08-1.07.06-2.1-.1-3.08-.42-.98-.32-1.8-.82-2.48-1.48-.7-.66-1.2-1.38-1.5-2.14-.3-.78-.45-1.6-.3-2.46.12-.66.38-1.28.75-1.83.38-.56.84-.96 1.34-1.33.6-.44 1.26-.7 1.95-.88.7-.18 1.44-.22 2.15-.12.63.08 1.25.26 1.83.54.4.2.78.43 1.14.68l-.78.84c-.3-.22-.64-.42-1.03-.6-.38-.18-.78-.32-1.2-.42-.66-.14-1.35-.15-2.04-.04-.66.1-1.28.32-1.85.64-.42.24-.8.5-1.1.8-.46.46-.8 1.02-.95 1.62-.1.38-.13.78-.1 1.2.03.4.15.78.33 1.12.3.56.76 1.04 1.33 1.42.58.38 1.22.6 1.9.68.6.08 1.2-.02 1.76-.2.58-.18 1.08-.48 1.53-.87.48-.42.84-.9.98-1.42.16-.54.2-1.1.1-1.68-.08-.58-.3-1.15-.65-1.62-.35-.48-.78-.88-1.26-1.2-.48-.32-1-.5-1.5-.58a.97.97 0 0 0-1.04.88c0 .54.4.92.93 1.12.2.08.4.16.6.22.6.2 1.2.3 1.82.26.56-.04 1.1-.16 1.6-.36.42-.18.8-.4 1.12-.68.4-.3.72-.64.96-1.04.3-.5.42-1.04.38-1.6-.04-.56-.2-.96-.4-1.36-.2-.4-.44-.72-.72-.94-.3-.23-.62-.4-1-.5-.4-.1-.8-.16-1.2-.16-.62 0-1.2.14-1.74.4-.38.2-.7.42-1.02.66-.4.3-.74.62-1.04.96-.34.38-.6.78-.78 1.2-.16.38-.26.78-.3 1.2-.04.42.06.84.28 1.22.2.36.46.68.76.94.32.28.66.5 1.04.66.4.16.82.26 1.25.26.46 0 .9-.1 1.3-.26.3-.12.58-.26.86-.42.3-.16.58-.34.82-.54.3-.26.54-.56.7-.88.16-.34.26-.68.32-1.06.06-.38.04-.76-.06-1.1-.08-.28-.2-.54-.34-.78-.14-.24-.3-.46-.48-.64-.2-.2-.42-.36-.66-.48-.22-.12-.46-.22-.7-.28z"
+              />
+            </svg>
+            <h3>Programming</h3>
+            <h5>C++, Python</h5>
+            <p>
+              Ability to design, implement, and debug structured programs and
+              applications.
+            </p>
+          </div>
+          <!-- Three.js SVG -->
+          <div class="skill-card">
+            <svg
+              role="img"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>Database Management</title>
+              <path
+                d="M12 0c-.01 0-.02 0-.03.01C5.38 0 0 5.4 0 12c0 6.57 5.38 12 11.97 12 .01 0 .02 0 .03 0C18.62 24 24 18.6 24 12 24 5.4 18.62 0 12 0zM7.5 18a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm9-9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zM4.5 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zM12 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zM7.5 13.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zM16.5 13.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zM19.5 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zM12 4.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zM16.5 4.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"
+              />
+            </svg>
+            <h3>Database Management</h3>
+            <h4>MySQL</h4>
+            <p>Ability to design, implement, and manage databases.</p>
+          </div>
+          <div class="skill-card">
+            <svg
+              role="img"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>DevOps & Cloud</title>
+              <path
+                d="M12 0c-.01 0-.02 0-.03.01C5.38 0 0 5.4 0 12c0 6.57 5.38 12 11.97 12 .01 0 .02 0 .03 0C18.62 24 24 18.6 24 12 24 5.4 18.62 0 12 0zM7.5 18a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm9-9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zM4.5 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zM12 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zM7.5 13.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zM16.5 13.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zM19.5 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zM12 4.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zM16.5 4.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"
+              />
+            </svg>
+            <h3>DevOps & Cloud</h3>
+            <h4>AWS</h4>
+            <p>
+              Ability to deploy and manage cloud infrastructure using AWS
+              services like EC2, S3, RDS
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects Section -->
+      <section id="projects" class="content-section">
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="projects-grid">
+          <div class="project-card">
+            <div class="project-info">
+              <h3>3D Portfolio Experience</h3>
+              <p>
+                A personal portfolio website featuring interactive 3D elements
+                and animations, built with Three.js and vanilla JavaScript.
+              </p>
+              <div class="project-links">
+                <a href="https://github.com/affan/3dportfolio" target="_blank"
+                  >Source Code</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-info">
+              <h3>Shopping Mall Management System (Cisco Packet Tracer)</h3>
+              <p>
+                Simulates a smart shopping-mall network with VLANs, security,
+                and QoS in Cisco Packet Tracer.
+              </p>
+              <div class="project-links">
+                <a
+                  href="https://github.com/username/shopping-mall"
+                  target="_blank"
+                  >Source Code</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-info">
+              <h3>AI Prediction Model for Flood Forecasting</h3>
+              <p>
+                Regression-based model utilizing matrices and real-time charts
+                to predict flood severity.
+              </p>
+              <div class="project-links">
+                <a
+                  href="https://github.com/username/ai-flood-model"
+                  target="_blank"
+                  >Source Code</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-info">
+              <h3>AI Integrated Email Chat System</h3>
+              <p>
+                Combines NLP, sentiment analysis, and real-time chat features
+                directly within an email client.
+              </p>
+              <div class="project-links">
+                <a
+                  href="https://github.com/username/ai-email-chat"
+                  target="_blank"
+                  >Source Code</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Socials Section -->
+      <section id="socials" class="content-section">
+        <h2 class="section-title">Find Me On</h2>
+        <div class="socials-grid">
+          <!-- GitHub SVG -->
+          <a
+            href="https://github.com/affanahmer"
+            target="_blank"
+            class="social-card"
+          >
+            <svg
+              role="img"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>GitHub</title>
+              <path
+                d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
+              />
+            </svg>
+            <h3>GitHub</h3>
+          </a>
+          <!-- LinkedIn SVG -->
+          <a
+            href="https://www.linkedin.com/in/affan-ahmer-b34779347"
+            target="_blank"
+            class="social-card"
+          >
+            <svg
+              role="img"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>LinkedIn</title>
+              <path
+                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.336zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 0 1 2.063-2.065 2.064 2.064 0 0 1 2.063 2.065c0 1.14-.925 2.065-2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"
+              />
+            </svg>
+            <h3>LinkedIn</h3>
+          </a>
+          <!-- Instagram SVG -->
+          <a
+            href="https://www.instagram.com/affan__ahmer?igsh=OG44bGVtOHhtZjQ1&utm_source=qr"
+            target="_blank"
+            class="social-card"
+          >
+            <svg
+              role="img"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>Instagram</title>
+              <path
+                d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.784.305-1.455.717-2.126 1.387C1.333 2.705.92 3.377.612 4.144c-.3.765-.5 1.635-.558 2.913C.015 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.26 2.148.558 2.913.308.766.718 1.437 1.387 2.108.67.67 1.342 1.08 2.108 1.387.765.3 1.635.5 2.913.558C8.333 23.985 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.26 2.913-.558.766-.308 1.437-.718 2.108-1.387.67-.67 1.08-1.342 1.387-2.108.3-.765.5-1.635.558-2.913.058-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.26-2.148-.558-2.913-.308-.766-.718-1.437-1.387-2.108C21.295 1.333 20.623.92 19.856.612c-.765-.3-1.635-.5-2.913-.558C15.667.015 15.26 0 12 0zm0 2.16c3.203 0 3.585.012 4.85.07 1.17.055 1.805.248 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.265.07 1.646.07 4.85s-.013 3.585-.07 4.85c-.053 1.17-.248 1.805-.413 2.227-.217.562-.477.96-.896 1.381-.42.419-.82.679-1.38.896-.423.164-1.057.36-2.227.413-1.265.057-1.646.07-4.85.07s-3.585-.013-4.85-.07c-1.17-.053-1.805-.248-2.227-.413-.562-.217-.96-.477-1.381-.896-.419-.42-.679-.82-1.381-.896-.164-.423-.36-1.057-.413-2.227-.057-1.265-.07-1.646-.07-4.85s.013-3.585.07-4.85c.053-1.17.248-1.805.413-2.227.217-.562.477-.96.896-1.381.42-.419.819-.679 1.381-.896.422-.164 1.057-.36 2.227-.413C8.415 2.172 8.797 2.16 12 2.16zm0 5.48c-2.49 0-4.5 2.01-4.5 4.5s2.01 4.5 4.5 4.5 4.5-2.01 4.5-4.5-2.01-4.5-4.5-4.5zm0 7.16c-1.473 0-2.66-1.187-2.66-2.66s1.187-2.66 2.66-2.66 2.66 1.187 2.66 2.66-1.187 2.66-2.66 2.66zm6.336-7.744c-.78 0-1.416.636-1.416 1.416s.636 1.416 1.416 1.416 1.416-.636 1.416-1.416-.636-1.416-1.416-1.416z"
+              />
+            </svg>
+            <h3>Instagram</h3>
+          </a>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section id="contact" class="content-section">
+        <div class="contact-content">
+          <h2 class="section-title">Let's Connect</h2>
+          <p>
+            I'm currently available for freelance work and open to discussing
+            new projects. Feel free to reach out!
+          </p>
+          <a href="#" class="contact-btn" id="contactBtn">Say Hello</a>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2025 Affan Ahmer. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Contact Form Modal -->
+    <div id="contactModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Send Message</h2>
+          <span class="close" id="closeModal">&times;</span>
+        </div>
+        <form
+          id="contactForm"
+          class="contact-form"
+          action="https://formspree.io/f/xpzgwqzg"
+          method="POST"
+        >
+          <div class="form-group">
+            <label for="name">Name *</label>
+            <input type="text" id="name" name="name" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject *</label>
+            <input type="text" id="subject" name="subject" required />
+          </div>
+          <div class="form-group">
+            <label for="message">Message * (minimum 10 characters)</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="5"
+              required
+              minlength="10"
+            ></textarea>
+            <div class="char-count">
+              <span id="charCount">0</span>/10 characters
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" id="cancelBtn">
+              Cancel
+            </button>
+            <button type="submit" class="btn-primary">Send Message</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // Wait for the DOM to be fully loaded before running the scripts.
+      window.onload = function () {
+        // --- Mobile Navigation Logic ---
+        const menuToggle = document.getElementById("menu-toggle");
+        const mobileNav = document.getElementById("mobile-nav");
+
+        // Toggle the mobile menu when the hamburger icon is clicked
+        menuToggle.addEventListener("click", () => {
+          mobileNav.classList.toggle("open");
+          menuToggle.classList.toggle("active");
+        });
+
+        // Close the mobile menu when a link is clicked
+        mobileNav.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", () => {
+            mobileNav.classList.remove("open");
+            menuToggle.classList.remove("active");
+          });
+        });
+
+        // --- Theme Management ---
+        let currentTheme = localStorage.getItem("theme") || "dark";
+        document.documentElement.className =
+          currentTheme === "light" ? "theme-light" : "";
+
+        const themeToggle = document.getElementById("themeToggle");
+
+        // --- Contact Form Modal ---
+        const contactBtn = document.getElementById("contactBtn");
+        const contactModal = document.getElementById("contactModal");
+        const closeModal = document.getElementById("closeModal");
+        const cancelBtn = document.getElementById("cancelBtn");
+        const contactForm = document.getElementById("contactForm");
+        const messageTextarea = document.getElementById("message");
+        const charCount = document.getElementById("charCount");
+
+        // Initialize EmailJS
+        emailjs.init("YOUR_EMAILJS_PUBLIC_KEY"); // You'll need to replace this with your actual EmailJS public key
+
+        // Open modal
+        contactBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          contactModal.style.display = "block";
+          document.body.style.overflow = "hidden"; // Prevent background scrolling
+        });
+
+        // Close modal functions
+        function closeContactModal() {
+          contactModal.style.display = "none";
+          document.body.style.overflow = "auto"; // Restore scrolling
+          contactForm.reset();
+          charCount.textContent = "0";
+          charCount.parentElement.classList.remove("error");
+        }
+
+        closeModal.addEventListener("click", closeContactModal);
+        cancelBtn.addEventListener("click", closeContactModal);
+
+        // Close modal when clicking outside
+        contactModal.addEventListener("click", (e) => {
+          if (e.target === contactModal) {
+            closeContactModal();
+          }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && contactModal.style.display === "block") {
+            closeContactModal();
+          }
+        });
+
+        // Character counter for message
+        messageTextarea.addEventListener("input", () => {
+          const length = messageTextarea.value.length;
+          charCount.textContent = length;
+
+          if (length < 10) {
+            charCount.parentElement.classList.add("error");
+          } else {
+            charCount.parentElement.classList.remove("error");
+          }
+        });
+
+        // Form submission
+        contactForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const message = messageTextarea.value;
+
+          // Validation
+          if (message.length < 10) {
+            alert("Message must be at least 10 characters long.");
+            return;
+          }
+
+          // Show loading state
+          const submitBtn = contactForm.querySelector('button[type="submit"]');
+          const originalText = submitBtn.textContent;
+          submitBtn.textContent = "Sending...";
+          submitBtn.disabled = true;
+
+          try {
+            // Get form data
+            const formData = new FormData(contactForm);
+            const name = formData.get("name");
+            const email = formData.get("email");
+            const subject = formData.get("subject");
+
+            // Create email body
+            const emailBody = `Name: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${message}`;
+
+            // Open email client with pre-filled data
+            const mailtoLink = `mailto:affan.ahmer999@gmail.com?subject=${encodeURIComponent(
+              `Portfolio Contact: ${subject}`
+            )}&body=${encodeURIComponent(emailBody)}`;
+            window.open(mailtoLink);
+
+            // Show success message
+            alert(
+              "Email client opened! Please send the message to receive it in your inbox."
+            );
+            closeContactModal();
+          } catch (error) {
+            console.error("Error:", error);
+            alert("Please email me directly at affan.ahmer999@gmail.com");
+          } finally {
+            // Reset button state
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+          }
+        });
+
+        // ===== THREE.JS 3D ANIMATED BACKGROUND =====
+        if (typeof THREE !== "undefined") {
+          // 3D Scene Setup
+          const scene = new THREE.Scene();
+          const camera = new THREE.PerspectiveCamera(
+            75,
+            window.innerWidth / window.innerHeight,
+            0.1,
+            1000
+          );
+          const renderer = new THREE.WebGLRenderer({
+            alpha: true,
+            antialias: true,
+          });
+
+          renderer.setSize(window.innerWidth, window.innerHeight);
+          renderer.setClearColor(0x000000, 0);
+          renderer.shadowMap.enabled = true;
+          renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+          // Add renderer to the 3D background container
+          const bg3d = document.getElementById("bg-3d");
+          bg3d.appendChild(renderer.domElement);
+
+          // Mouse tracking variables
+          const mouse = { x: 0, y: 0 };
+          const targetRotation = { x: 0, y: 0 };
+          const currentRotation = { x: 0, y: 0 };
+
+          // Create 3D Objects Array
+          const objects = [];
+          const particles = [];
+
+          // Create Geometric Shapes
+          function createGeometryObjects() {
+            const geometries = [
+              new THREE.BoxGeometry(1, 1, 1),
+              new THREE.SphereGeometry(0.7, 32, 32),
+              new THREE.ConeGeometry(0.7, 1.5, 32),
+              new THREE.OctahedronGeometry(0.8),
+              new THREE.TorusGeometry(0.7, 0.3, 16, 100),
+              new THREE.TetrahedronGeometry(1),
+              new THREE.DodecahedronGeometry(0.8),
+              new THREE.IcosahedronGeometry(0.8),
+            ];
+
+            for (let i = 0; i < 15; i++) {
+              const geometry =
+                geometries[Math.floor(Math.random() * geometries.length)];
+              const material = new THREE.MeshPhongMaterial({
+                color: new THREE.Color().setHSL(Math.random(), 0.8, 0.6),
+                transparent: true,
+                opacity: 0.7,
+                shininess: 100,
+              });
+
+              const mesh = new THREE.Mesh(geometry, material);
+
+              // Random positioning
+              mesh.position.x = (Math.random() - 0.5) * 50;
+              mesh.position.y = (Math.random() - 0.5) * 50;
+              mesh.position.z = (Math.random() - 0.5) * 50;
+
+              // Random rotation
+              mesh.rotation.x = Math.random() * Math.PI;
+              mesh.rotation.y = Math.random() * Math.PI;
+              mesh.rotation.z = Math.random() * Math.PI;
+
+              // Animation properties
+              mesh.userData = {
+                originalPosition: mesh.position.clone(),
+                rotationSpeed: {
+                  x: (Math.random() - 0.5) * 0.02,
+                  y: (Math.random() - 0.5) * 0.02,
+                  z: (Math.random() - 0.5) * 0.02,
+                },
+                floatSpeed: Math.random() * 0.01 + 0.005,
+                floatRange: Math.random() * 3 + 1,
+              };
+
+              scene.add(mesh);
+              objects.push(mesh);
+            }
+          }
+
+          // Create Particle System
+          function createParticleSystem() {
+            const particleCount = 200;
+            const positions = new Float32Array(particleCount * 3);
+            const colors = new Float32Array(particleCount * 3);
+            const sizes = new Float32Array(particleCount);
+
+            for (let i = 0; i < particleCount; i++) {
+              const i3 = i * 3;
+
+              // Positions
+              positions[i3] = (Math.random() - 0.5) * 100;
+              positions[i3 + 1] = (Math.random() - 0.5) * 100;
+              positions[i3 + 2] = (Math.random() - 0.5) * 100;
+
+              // Colors
+              const color = new THREE.Color().setHSL(Math.random(), 0.7, 0.8);
+              colors[i3] = color.r;
+              colors[i3 + 1] = color.g;
+              colors[i3 + 2] = color.b;
+
+              // Sizes
+              sizes[i] = Math.random() * 3 + 1;
+            }
+
+            const particleGeometry = new THREE.BufferGeometry();
+            particleGeometry.setAttribute(
+              "position",
+              new THREE.BufferAttribute(positions, 3)
+            );
+            particleGeometry.setAttribute(
+              "color",
+              new THREE.BufferAttribute(colors, 3)
+            );
+            particleGeometry.setAttribute(
+              "size",
+              new THREE.BufferAttribute(sizes, 1)
+            );
+
+            const particleMaterial = new THREE.ShaderMaterial({
+              uniforms: {
+                time: { value: 0 },
+              },
+              vertexShader: `
+                attribute float size;
+                attribute vec3 color;
+                varying vec3 vColor;
+                uniform float time;
+                
+                void main() {
+                  vColor = color;
+                  vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+                  gl_PointSize = size * (300.0 / -mvPosition.z) * (1.0 + 0.5 * sin(time + position.x * 0.01));
+                  gl_Position = projectionMatrix * mvPosition;
+                }
+              `,
+              fragmentShader: `
+                varying vec3 vColor;
+                
+                void main() {
+                  float r = distance(gl_PointCoord, vec2(0.5, 0.5));
+                  if (r > 0.5) discard;
+                  
+                  float alpha = 1.0 - smoothstep(0.0, 0.5, r);
+                  gl_FragColor = vec4(vColor, alpha * 0.8);
+                }
+              `,
+              transparent: true,
+              blending: THREE.AdditiveBlending,
+            });
+
+            const particleSystem = new THREE.Points(
+              particleGeometry,
+              particleMaterial
+            );
+            scene.add(particleSystem);
+            particles.push(particleSystem);
+          }
+
+          // Lighting Setup
+          function setupLighting() {
+            // Ambient light
+            const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+            scene.add(ambientLight);
+
+            // Point lights
+            const light1 = new THREE.PointLight(0x7850ff, 2, 50);
+            light1.position.set(10, 10, 10);
+            scene.add(light1);
+
+            const light2 = new THREE.PointLight(0x60a5fa, 1.5, 50);
+            light2.position.set(-10, -10, 10);
+            scene.add(light2);
+
+            const light3 = new THREE.PointLight(0x22c55e, 1, 30);
+            light3.position.set(0, 15, -10);
+            scene.add(light3);
+          }
+
+          // Mouse Movement Handler
+          function onMouseMove(event) {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            targetRotation.x = mouse.y * 0.3;
+            targetRotation.y = mouse.x * 0.3;
+          }
+
+          // Animation Loop
+          let time = 0;
+          function animate() {
+            requestAnimationFrame(animate);
+            time += 0.01;
+
+            // Smooth camera rotation based on mouse
+            currentRotation.x += (targetRotation.x - currentRotation.x) * 0.05;
+            currentRotation.y += (targetRotation.y - currentRotation.y) * 0.05;
+
+            camera.position.x = Math.sin(currentRotation.y) * 20;
+            camera.position.y = Math.sin(currentRotation.x) * 10;
+            camera.position.z = Math.cos(currentRotation.y) * 20;
+            camera.lookAt(scene.position);
+
+            // Animate objects
+            objects.forEach((obj, index) => {
+              // Rotation
+              obj.rotation.x += obj.userData.rotationSpeed.x;
+              obj.rotation.y += obj.userData.rotationSpeed.y;
+              obj.rotation.z += obj.userData.rotationSpeed.z;
+
+              // Floating motion
+              obj.position.y =
+                obj.userData.originalPosition.y +
+                Math.sin(time * obj.userData.floatSpeed + index) *
+                  obj.userData.floatRange;
+
+              // Orbital motion
+              const orbitalRadius = 5 + index * 2;
+              obj.position.x =
+                obj.userData.originalPosition.x +
+                Math.cos(time * 0.5 + index * 0.5) * orbitalRadius * 0.3;
+              obj.position.z =
+                obj.userData.originalPosition.z +
+                Math.sin(time * 0.5 + index * 0.5) * orbitalRadius * 0.3;
+
+              // Color animation
+              obj.material.color.setHSL(
+                (time * 0.1 + index * 0.1) % 1,
+                0.8,
+                0.6 + Math.sin(time + index) * 0.2
+              );
+            });
+
+            // Animate particles
+            particles.forEach((particleSystem) => {
+              particleSystem.material.uniforms.time.value = time;
+              particleSystem.rotation.y += 0.001;
+
+              const positions =
+                particleSystem.geometry.attributes.position.array;
+              for (let i = 0; i < positions.length; i += 3) {
+                positions[i + 1] += Math.sin(time + positions[i] * 0.01) * 0.01;
+              }
+              particleSystem.geometry.attributes.position.needsUpdate = true;
+            });
+
+            renderer.render(scene, camera);
+          }
+
+          // Initialize 3D Scene
+          function init3DScene() {
+            setupLighting();
+            createGeometryObjects();
+            createParticleSystem();
+
+            camera.position.z = 20;
+
+            // Event listeners
+            window.addEventListener("mousemove", onMouseMove, false);
+
+            // Handle window resize
+            window.addEventListener("resize", () => {
+              camera.aspect = window.innerWidth / window.innerHeight;
+              camera.updateProjectionMatrix();
+              renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            // Start animation
+            animate();
+          }
+
+          // Theme change handler for 3D scene
+          function update3DTheme(isDark) {
+            if (isDark) {
+              renderer.setClearColor(0x0a0a1a, 0);
+              scene.fog = new THREE.Fog(0x0a0a1a, 30, 100);
+            } else {
+              renderer.setClearColor(0xffffff, 0);
+              scene.fog = new THREE.Fog(0xf8fafc, 30, 100);
+            }
+          }
+
+          // Initialize the 3D scene
+          init3DScene();
+          update3DTheme(currentTheme === "dark");
+
+          // Theme toggle functionality
+          themeToggle.addEventListener("click", () => {
+            currentTheme = currentTheme === "dark" ? "light" : "dark";
+            localStorage.setItem("theme", currentTheme);
+
+            // Add transitioning class for cross-fade effect
+            document.documentElement.classList.add("theme-transitioning");
+
+            // Apply the new theme
+            if (currentTheme === "light") {
+              document.documentElement.className =
+                "theme-light theme-transitioning";
+            } else {
+              document.documentElement.className = "theme-transitioning";
+            }
+
+            // Update 3D scene theme
+            update3DTheme(currentTheme === "dark");
+
+            // Remove transitioning class after animation completes
+            setTimeout(() => {
+              document.documentElement.classList.remove("theme-transitioning");
+            }, 800);
+          });
+        } else {
+          // Fallback if Three.js doesn't load
+          console.warn("Three.js not loaded, using fallback background");
+
+          // Simple fallback animation
+          const canvas = document.getElementById("bg-canvas");
+          const context = canvas.getContext("2d");
+
+          function adjustCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+          }
+          adjustCanvas();
+          window.addEventListener("resize", adjustCanvas);
+
+          // Theme toggle for fallback
+          themeToggle.addEventListener("click", () => {
+            currentTheme = currentTheme === "dark" ? "light" : "dark";
+            localStorage.setItem("theme", currentTheme);
+
+            document.documentElement.classList.add("theme-transitioning");
+
+            if (currentTheme === "light") {
+              document.documentElement.className =
+                "theme-light theme-transitioning";
+            } else {
+              document.documentElement.className = "theme-transitioning";
+            }
+
+            setTimeout(() => {
+              document.documentElement.classList.remove("theme-transitioning");
+            }, 800);
+          });
+        }
+      };
+    </script>
+  </body>
+</html>
